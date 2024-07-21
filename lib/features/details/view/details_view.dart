@@ -25,23 +25,25 @@ class DetailsView extends StatelessWidget {
           ),
           iconTheme: const IconThemeData(size: 30),
         ),
-        body: BlocConsumer<DetailsCubit, DetailsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is DetailsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is DetailsSucsses) {
-              final product = context.read<DetailsCubit>().product;
-              if (product != null) {
-                return CustomDesignDetails(detailsModel: product);
+        body: SingleChildScrollView(
+          child: BlocConsumer<DetailsCubit, DetailsState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is DetailsLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is DetailsSucsses) {
+                final product = context.read<DetailsCubit>().product;
+                if (product != null) {
+                  return CustomDesignDetails(detailsModel: product);
+                } else {
+                  return const Center(
+                      child: Text('No product details available.'));
+                }
               } else {
-                return const Center(
-                    child: Text('No product details available.'));
+                return Container();
               }
-            } else {
-              return Container();
-            }
-          },
+            },
+          ),
         ),
       ),
     );
